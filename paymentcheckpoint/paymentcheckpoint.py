@@ -51,11 +51,14 @@ class PaymentCheckpointXBlock(XBlock):
 
     def student_view(self, context=None):
         """Main view shown to learners."""
+        # If Studio is showing a preview (author mode), use the author view
+        if context and context.get('is_author_mode'):
+            return self.author_view(context)
+
         username = self._get_student_username()
         course_id = str(getattr(self, 'course_id', 'course-v1:test+test+2024'))
         usage_id = str(self.scope_ids.usage_id)
 
-        # Load CSS and JS as inline strings
         css_content = self.resource_string('css/paymentcheckpoint.css')
         js_content = self.resource_string('js/paymentcheckpoint.js')
 
@@ -88,22 +91,6 @@ class PaymentCheckpointXBlock(XBlock):
         frag.add_css(css_content)
         frag.add_javascript(js_content)
         frag.initialize_js('PaymentCheckpointXBlock')
-        return frag
-
-    def author_view(self, context=None):
-        """
-        Render a placeholder in Studio – the actual configuration is done via the
-        edit button (which opens studio_view).
-        """
-        html = """
-            <div class="payment-checkpoint-author-view">
-                <p>🔒 <strong>Payment Checkpoint</strong></p>
-                <p>This block protects content until a payment is made.</p>
-                <p>Configure the <strong>Payment URL</strong> using the edit button (pencil icon).</p>
-            </div>
-        """
-        frag = Fragment(html)
-        # No CSS/JS needed for the author view
         return frag
 
     @XBlock.handler

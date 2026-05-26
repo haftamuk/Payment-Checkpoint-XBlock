@@ -65,7 +65,9 @@ cd /Users/macbookpro/openEdxProjects/xblock_development
 xblock-sdk/bin/workbench-make-xblock
 
 to install the package
-pip install -e paymentcheckpoint
+(venv) macbookpro@MacBooks-MacBook-Pro xblock_development % cd xblock-sdk 
+pip uninstall paymentcheckpoint-xblock
+pip install -e ../payment-checkpoint-xblock 
 
 
 run it on xblock-sdk
