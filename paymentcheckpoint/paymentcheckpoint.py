@@ -90,6 +90,22 @@ class PaymentCheckpointXBlock(XBlock):
         frag.initialize_js('PaymentCheckpointXBlock')
         return frag
 
+    def author_view(self, context=None):
+        """
+        Render a placeholder in Studio – the actual configuration is done via the
+        edit button (which opens studio_view).
+        """
+        html = """
+            <div class="payment-checkpoint-author-view">
+                <p>🔒 <strong>Payment Checkpoint</strong></p>
+                <p>This block protects content until a payment is made.</p>
+                <p>Configure the <strong>Payment URL</strong> using the edit button (pencil icon).</p>
+            </div>
+        """
+        frag = Fragment(html)
+        # No CSS/JS needed for the author view
+        return frag
+
     @XBlock.handler
     def simulate_paid(self, request, suffix=''):
         """Testing handler – marks the block as complete without external call."""

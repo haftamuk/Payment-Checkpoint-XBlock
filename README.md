@@ -1,4 +1,64 @@
+
 <!-- paymentcheckpoint/README.md -->
+
+
+Now that your XBlock is successfully installed and registered (the entry point `paymentcheckpoint` appears in the list), the final step is to enable it for your course in **Studio**. Below is the complete, step‑by‑step command guide to see the XBlock in your **Open edX Tutor development environment**.
+
+## Complete workflow to see PaymentCheckpointXBlock in Studio
+
+### 1. Ensure the XBlock is installed (you already did this)
+```bash
+# Enter the CMS container and manually install the XBlock (if not present)
+tutor dev exec cms bash
+pip install git+https://github.com/haftamuk/Payment-Checkpoint-XBlock.git@main
+exit
+tutor dev restart cms
+```
+
+### 2. Verify the XBlock entry point is registered
+```bash
+tutor dev exec cms python -c "from pkg_resources import iter_entry_points; print([ep.name for ep in iter_entry_points('xblock.v1')])" | grep paymentcheckpoint
+```
+You should see `'paymentcheckpoint'` in the output.
+
+### 3. Enable the XBlock in your course (Studio configuration)
+- Open your course in **Studio** (e.g., `https://studio.local.openedx.io/course/course-v1:…`)
+- Go to **Settings** → **Advanced Settings**
+- Find the field **Advanced Module List**
+- Add `"paymentcheckpoint"` to the list. For example:
+  ```json
+  ["paymentcheckpoint", "other_blocks"]
+  ```
+- Click **Save Changes**
+
+### 4. Add the XBlock to a unit
+- Navigate to **Content** → **Outline** and select a **Section** and **Subsection** where you want the checkpoint.
+- Under an existing **Unit**, click **Add New Component** → **Advanced** → **Payment Checkpoint**.
+- The XBlock will appear in the unit.
+
+### 5. (Optional) Test the XBlock locally
+- In the LMS (learner view), the block will show a **Proceed to Payment** link.
+- Use the **Simulate Payment** button (visible only in the SDK) to test the completion flow without a real payment service.
+
+## Notes for development
+- If you later update the XBlock code, re‑install it inside the container:
+  ```bash
+  tutor dev exec cms bash
+  pip uninstall paymentcheckpoint-xblock -y
+  pip install git+https://github.com/haftamuk/Payment-Checkpoint-XBlock.git@main
+  exit
+  tutor dev restart cms
+  ```
+- For faster iteration during development, use **editable installation**:
+  ```bash
+  # Clone the repo on your host, then mount it
+  tutor mounts add /path/to/Payment-Checkpoint-XBlock
+  tutor dev launch
+  ```
+
+Now the XBlock should appear in your Studio component list. If it still does not show, double‑check that the course’s **Advanced Module List** includes exactly `"paymentcheckpoint"` (including the quotes) and that you have saved the changes.
+
+
 
 # Creating a new skeleton XBlock
 cd /Users/macbookpro/openEdxProjects/xblock_development
@@ -55,6 +115,10 @@ python manage.py runserver 8882
 
 ### For Open edX (Tutor)
 1. Add the XBlock to your Tutor environment:
+
+/Users/macbookpro/Library/Application Support/tutor-main
+tutor config save
+tutor restart restart lms
 
 tutor plugins enable discovery
 
