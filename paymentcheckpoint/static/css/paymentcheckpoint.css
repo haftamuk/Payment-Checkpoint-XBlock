@@ -1,0 +1,28 @@
+/* paymentcheckpoint/paymentcheckpoint/static/css/paymentcheckpoint.css */
+
+.payment-checkpoint-block {
+    text-align: center;
+    padding: 2rem;
+    border: 1px solid #ddd;
+    margin: 1rem 0;
+    border-radius: 8px;
+}
+.payment-required h3 {
+    color: #c00;
+}
+.payment-success h3 {
+    color: #0a0;
+}
+.payment-button {
+    display: inline-block;
+    padding: 12px 24px;
+    background: #0075b4;
+    color: #fff !important;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-top: 1rem;
+}
+.payment-button:hover {
+    background: #005580;
+}

@@ -1,0 +1,9 @@
+Metadata-Version: 2.4
+Name: paymentcheckpoint-xblock
+Version: 0.1
+Summary: Payment checkpoint is an Open edX component used to protect parts of a course from unless payment is made. It locks contents until payment is made
+License: UNKNOWN
+Requires-Dist: XBlock
+Dynamic: license
+Dynamic: requires-dist
+Dynamic: summary
